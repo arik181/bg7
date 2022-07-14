@@ -18,12 +18,9 @@ fn main() -> Result<(),Box<dyn Error>> {
 
     setup_term()?; 
 
-    let t = Terminal::new(CrosstermBackend::new(io::stdout())).unwrap();
-    App::new();
+    let mut t = Terminal::new(CrosstermBackend::new(io::stdout())).unwrap();
 
-    App::run();
-
-    thread::sleep(Duration::new(5,0));
+    App::run(&mut t)?;
 
     cleanup_term(t)?;
 
