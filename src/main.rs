@@ -1,6 +1,4 @@
 use std::io;
-use std::thread;
-use std::time::Duration;
 use std::error::Error;
 use tui::{
     backend::{CrosstermBackend},
@@ -24,6 +22,5 @@ fn main() -> Result<(),Box<dyn Error>> {
 
     cleanup_term(t)?;
 
-    println!("We done!");
     Ok(())
 }

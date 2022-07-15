@@ -6,10 +6,9 @@ use crossterm::{
 };
 use tui::{
     backend::{CrosstermBackend},
-    layout::{Constraint, Direction, Layout},
-    style::{Color, Modifier, Style},
-    text::{Span, Spans},
-    widgets::{Block,Borders},
+    layout::{Rect},
+    style::{Color, Style},
+    widgets::{Block,Borders,BorderType},
     Frame, 
     Terminal,
 };
@@ -40,13 +39,38 @@ impl App {
 
     fn ui(f: &mut Frame<CrosstermBackend<Stdout>>) {
         let size = f.size();
-        let chunks = Layout::default()
-            .direction(Direction::Vertical)
-            .margin(5)
-            .constraints([Constraint::Length(3), Constraint::Min(0)].as_ref())
-            .split(size);
 
-        let block = Block::default().style(Style::default().bg(Color::White).fg(Color::Black));
+        let block = Block::default()
+            .style(Style::default().bg(Color::Rgb(0,0,0)).fg(Color::Rgb(0,255,0)))
+            .title("bg7")
+            .border_type(BorderType::Rounded)
+            .borders(Borders::ALL);
+
+        let inner = Block::default()
+            .style(Style::default().bg(Color::Rgb(0,0,0)).fg(Color::Rgb(0,255,0)))
+            .border_type(BorderType::Rounded)
+            .borders(Borders::ALL);
+
+        let innersize = 
+            Rect { 
+                x : (size.width / 2) - 20,
+                y : (size.height / 2) - 4,
+                width : 40,
+                height : 10,
+            };
+
+        let text = Block::default().title("Hello.");
+        let textsize = 
+            Rect {
+                x : (innersize.width / 2) - 3 + innersize.x,
+                y : (innersize.height / 2) - 1 + innersize.y,
+                width : 6 as u16,
+                height : 1 as u16,
+            };
+            
+
         f.render_widget(block, size);
+        f.render_widget(inner, innersize);
+        f.render_widget(text, textsize);
     }
 }
